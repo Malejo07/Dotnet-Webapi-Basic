@@ -1,12 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyVaccine.WebApi.Models
 {
-    public class MyVaccineAppDbContext : DbContext
+    public class MyVaccineAppDbContext : IdentityDbContext<IdentityUser>
     {
         public MyVaccineAppDbContext(DbContextOptions<MyVaccineAppDbContext> options) : base(options)
         {
-            
+
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
@@ -18,6 +20,35 @@ namespace MyVaccine.WebApi.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<IdentityUser>()
+            //   .HasKey(u => u.Id);
+
+            //modelBuilder.Entity<IdentityRole>()
+            //    .HasKey(r => r.Id);
+
+            //modelBuilder.Entity<IdentityUserRole<string>>()
+            //    .HasKey(r => new { r.UserId, r.RoleId });
+
+            //modelBuilder.Entity<IdentityUserLogin<string>>()
+            //    .HasKey(l => new { l.LoginProvider, l.ProviderKey });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(u => u.UserName)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(u => u.Email)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(u => u.Password)
+                    .IsRequired()
+                    .HasMaxLength(255);
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(u => u.UserName)
