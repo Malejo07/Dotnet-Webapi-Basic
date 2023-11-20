@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.SetDatabaseConfiguration();//Metodo de extensión BD
 builder.Services.SetMyVaccineAuthConfigurations();
+builder.Services.SetDependencyInjections();
 
 var app = builder.Build();
 

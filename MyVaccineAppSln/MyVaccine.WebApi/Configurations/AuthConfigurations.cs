@@ -15,6 +15,8 @@ namespace MyVaccine.WebApi.Configurations
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 8;
+                options.User.RequireUniqueEmail = false;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
 
                 //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15); Esto es para cerrar la sesion despues de 15 minutos
                 //options.Lockout.MaxFailedAccessAttempts = 5; Esto es para bloquear el acceso despues de 5 intentos.
