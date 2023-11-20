@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using MyVaccine.WebApi.Dtos;
 using MyVaccine.WebApi.Literals;
 using MyVaccine.WebApi.Repositories.Contracts;
+using MyVaccine.WebApi.Services.Contracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -15,44 +16,40 @@ namespace MyVaccine.WebApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;// Este _userManager lo utilizamos con el fin de no utilizar el objeto directo de la inyección?
-        private readonly IUserRepository _userRepository;
-        
-        public AuthController(UserManager<IdentityUser> userManager, IUserRepository userRepository)
+        private readonly IUserService _userService;
+
+        public AuthController(UserManager<IdentityUser> userManager, IUserService userService)
         {
-            _userManager = userManager;
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequetDto model)
-        {            
-            //var result = await _userRepository.AddUser(model);
-            //if (!result.Succeeded)
-            //{
-            //    return BadRequest(result.Errors);
-            //}
-            //else
-            //{
-
-            //}
-
-            return Ok("User registered successfully");
+        {
+            var response = await _userService.AddUserAsync(model);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(response);
+            }
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
         {
-            
-
-                return Ok(new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
-                });
+            var response = await _userService.Login(model);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return Unauthorized(response);
             }
 
-            return Unauthorized();
         }
     }
 }
