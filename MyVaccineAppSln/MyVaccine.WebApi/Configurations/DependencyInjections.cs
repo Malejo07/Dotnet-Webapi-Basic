@@ -18,7 +18,6 @@ namespace MyVaccine.WebApi.Configurations
             #region Services Injection
             services.AddScoped<IUserService, UserService> ();
             services.AddScoped<IDependentService, DependentService> ();
-
             #endregion
 
             return services;
