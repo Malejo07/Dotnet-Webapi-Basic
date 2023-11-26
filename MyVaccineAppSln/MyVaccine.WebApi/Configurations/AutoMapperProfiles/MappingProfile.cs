@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyVaccine.WebApi.Dtos.Allergy;
 using MyVaccine.WebApi.Dtos.Dependet;
 using MyVaccine.WebApi.Models;
 
@@ -11,6 +12,10 @@ namespace MyVaccine.WebApi.Configurations.AutoMapperProfiles
             CreateMap<Dependent, DependentRequestDto>().ReverseMap();
             CreateMap<Dependent, DependentResponseDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.DependentId)).ReverseMap();
+
+            CreateMap<Allergy, AllergyRequestDto>().ReverseMap();
+            CreateMap<Allergy, AllergyResponseDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AllergyId)).ReverseMap();
         }
     }
 }
