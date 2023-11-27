@@ -14,12 +14,17 @@ namespace MyVaccine.WebApi.Configurations
             services.AddScoped<IUserRepository, UserRepository> ();
             services.AddScoped<IBaseRepository<Dependent>, BaseRepository<Dependent>>();//con esto nos olvidamos de crear ese repositorio del modelo Dependet, basta con el básico,no se hace como el repositorio de User ya que ese va a tener mas funcionalidades 
             services.AddScoped<IBaseRepository<Allergy>, BaseRepository<Allergy>>();
+            services.AddScoped<IBaseRepository<FamilyGroup>, BaseRepository<FamilyGroup>>();
+
             #endregion
 
             #region Services Injection
             services.AddScoped<IUserService, UserService> ();
             services.AddScoped<IDependentService, DependentService> ();
             services.AddScoped<IAllergyService, AllergyService> ();
+            services.AddScoped<IFamilyGroupService, FamilyGroupService> ();
+
+
             #endregion
 
             return services;
