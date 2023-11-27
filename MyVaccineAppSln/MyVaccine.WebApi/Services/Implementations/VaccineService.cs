@@ -40,7 +40,7 @@ namespace MyVaccine.WebApi.Services.Implementations
 
         public async Task<IEnumerable<VaccineResponseDto>> GetAll()
         {
-            var vaccines = await _vaccineRepository.GetAll().AsNoTracking().ToListAsync();//Nota:AsNoTracking sirve para agilizar la consulta y quitar todo ese contextto que nos ofrece EF y sus funcionalidades
+            var vaccines = await _vaccineRepository.GetAll().AsNoTracking().ToListAsync();
             var response = _mapper.Map<IEnumerable<VaccineResponseDto>>(vaccines);
             return response;
         }
