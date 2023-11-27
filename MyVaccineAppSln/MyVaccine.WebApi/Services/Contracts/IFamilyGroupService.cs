@@ -1,6 +1,4 @@
-﻿
-
-using MyVaccine.WebApi.Dtos.FamilyGroup;
+﻿using MyVaccine.WebApi.Dtos.FamilyGroup;
 
 namespace MyVaccine.WebApi.Services.Contracts
 {
