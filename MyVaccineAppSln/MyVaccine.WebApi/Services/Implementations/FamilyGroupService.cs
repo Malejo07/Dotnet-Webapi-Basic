@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using MyVaccine.WebApi.Dtos.Allergy;
 using MyVaccine.WebApi.Dtos.FamilyGroup;
 using MyVaccine.WebApi.Models;
 using MyVaccine.WebApi.Repositories.Contracts;
@@ -18,29 +20,50 @@ namespace MyVaccine.WebApi.Services.Implementations
         }
 
 
-        public Task<FamilyGroupResponseDto> Add(FamilyGroupRequestDto request)
+        public async Task<FamilyGroupResponseDto> Add(FamilyGroupRequestDto request)
         {
-            throw new NotImplementedException();
+            var familysgroups = new FamilyGroup();
+            familysgroups.Name = request.Name;
+            familysgroups.UserId = request.UserId;
+
+            await _familyGroupRepository.Add(familysgroups);
+            var response = _mapper.Map<FamilyGroupResponseDto>(familysgroups);
+            return response;
+
         }
 
-        public Task<FamilyGroupResponseDto> Delete(int id)
+        public async Task<FamilyGroupResponseDto> Delete(int id)
         {
-            throw new NotImplementedException();
+            var familysgroups = await _familyGroupRepository.FindBy(x => x.FamilyGroupId == id).FirstOrDefaultAsync();
+
+            await _familyGroupRepository.Delete(familysgroups);
+            var response = _mapper.Map<FamilyGroupResponseDto>(familysgroups);
+            return response;
         }
 
-        public Task<IEnumerable<FamilyGroupResponseDto>> GetAll()
+        public async Task<IEnumerable<FamilyGroupResponseDto>> GetAll()
         {
-            throw new NotImplementedException();
+            var familysgroups = await _familyGroupRepository.GetAll().AsNoTracking().ToListAsync();
+            var response = _mapper.Map<IEnumerable<FamilyGroupResponseDto>>(familysgroups);
+            return response;
         }
 
-        public Task<FamilyGroupResponseDto> GetById(int id)
+        public async Task<FamilyGroupResponseDto> GetById(int id)
         {
-            throw new NotImplementedException();
+            var familysgroups = await _familyGroupRepository.FindByAsNoTracking(x => x.FamilyGroupId == id).FirstOrDefaultAsync();
+            var response = _mapper.Map<FamilyGroupResponseDto>(familysgroups);
+            return response;
         }
 
-        public Task<FamilyGroupResponseDto> Update(FamilyGroupRequestDto request, int id)
+        public async Task<FamilyGroupResponseDto> Update(FamilyGroupRequestDto request, int id)
         {
-            throw new NotImplementedException();
+            var familysgroups = await _familyGroupRepository.FindBy(x => x.FamilyGroupId == id).FirstOrDefaultAsync();
+            familysgroups.Name = request.Name;
+            familysgroups.UserId = request.UserId;
+
+            await _familyGroupRepository.Update(familysgroups);
+            var response = _mapper.Map<FamilyGroupResponseDto>(familysgroups);
+            return response;
         }
     }
 }
